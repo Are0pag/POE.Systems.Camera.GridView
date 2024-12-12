@@ -2,9 +2,8 @@ using Cysharp.Threading.Tasks;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal interface IFreeCamera
+    internal interface IFreeCamera : ICancelable
     {
-        // но как тогда быть с реализацией RaiseEvent? Метод же асинхронный
         UniTask ShowMap(ShowMapArgs args);
     }
 }

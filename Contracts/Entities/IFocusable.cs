@@ -1,13 +1,14 @@
-using Cysharp.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView
 {
     internal interface IFocusable
     {
-        Transform Target { get; }
+        [AllowNull]
+        Transform Target { get; set; }
 
-        UniTask MoveAt(MoveToSelectedItemArgs args);
+        //UniTask MoveAt(MoveToSelectedItemArgs args);  -> event
         
         void Follow();
     }

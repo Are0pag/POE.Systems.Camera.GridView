@@ -1,25 +1,28 @@
-using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class FocusState : CameraState
+    internal class FocusState : CameraState, IFocusTargetHandler, ICancelOperationHandler
     {
         protected readonly IFocusable _focusable;
+        protected readonly IFocusCatcher _focusCatcher;
         
-        internal FocusState(IFocusable focusable) {
+        internal FocusState(IFocusable focusable, IFocusCatcher focusCatcher) {
             _focusable = focusable;
-        }
-        
-        internal override async UniTask OnEnter() {
-            await UniTask.Yield();
+            _focusCatcher = focusCatcher;
         }
 
         internal override void Update() {
-            throw new System.NotImplementedException();
+            _focusable.Follow();
         }
 
-        internal override void OnSwitch() {
-            throw new System.NotImplementedException();
+        public async void SetFocusTarget(Transform focusTarget) {
+            await _focusCatcher.MoveAt(new MoveToSelectedItemArgs(focusTarget));
+            _focusable.Target = focusTarget;
+        }
+
+        public void CancelOperations() {
+            _focusCatcher.Cancel();
         }
     }
 }
