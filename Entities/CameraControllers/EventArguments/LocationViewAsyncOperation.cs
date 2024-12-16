@@ -58,7 +58,7 @@ namespace Scripts.Systems.Camera.GridView
             CreateOperation(
                 startPosition: args.MovePointsTrace.Dequeue(), 
                 targetPosition: args.MovePointsTrace.Peek(), 
-                byTime: _settings.TimeOfView);
+                byTime: _settings.TimeOfMovingOneWayPoint);
             
             await _operationHandler.RunAsync();
             await ShowIntervalAsyncRecursive(args);
