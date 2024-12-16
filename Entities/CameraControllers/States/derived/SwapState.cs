@@ -1,8 +1,8 @@
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class SwapState : CameraState
+    public class SwapState : CameraState
     {
-        protected readonly ISwapper _swapper;
+        protected private readonly ISwapper _swapper;
 
         internal SwapState(ISwapper swapper) {
             _swapper = swapper;

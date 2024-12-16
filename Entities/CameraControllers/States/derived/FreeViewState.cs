@@ -1,31 +1,22 @@
 using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class FreeViewState : CameraState, IFreeViewHandler
+    public class FreeViewState : CameraState, ICancelOperationHandler
     {
-        protected readonly IFreeCamera _freeCamera;
+        protected private readonly IFreeCamera _freeCamera;
 
         internal FreeViewState(IFreeCamera freeCamera) {
             _freeCamera = freeCamera;
         }
 
-        internal override void Update() {
-            
+        internal override void Update() { }
+
+        internal async UniTask ViewLocation(ShowMapArgs args) {
+            await _freeCamera.ShowMapAsyncRecursive(args);
         }
 
-        public async void ViewLocation() {
-            //await _freeCamera.ShowMap();
-            
-            // 1) assembly reference
-            // 2) generate viewSettings on runtime
-            // 3) maybe use parent assembly to automatic reference to childs
-        }
-    }
-
-    public class ViewLocationSettings
-    {
-        public List<Vector3> ViewPoints = new List<Vector3>();
+        public void CancelOperations() => _freeCamera.Cancel();
     }
 }

@@ -1,16 +1,32 @@
 
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+
 namespace Scripts.Systems.Camera.GridView
 {
+    /*
+     * состояния камеры должны быть публичными классами, и присваивать их необходимо из интерфейса модуля
+     */
     public class ViewModule
     {
-        private readonly IGidViewer _gridViewer;
+        private readonly GridViewer _gridViewer;
         
-        internal ViewModule(IGidViewer viewer) {
+        public SwapState SwapState { get; }
+        public FocusState FocusState { get; }
+        public FreeViewState FreeViewState { get; }
+        
+        internal ViewModule(GridViewer viewer, SwapState swapState, FocusState focusState, FreeViewState freeViewState) {
             _gridViewer = viewer;
+            SwapState = swapState;
+            FocusState = focusState;
+            FreeViewState = freeViewState;
         }
+        
+        public void SetState(CameraState state) => _gridViewer.SwitchState(state);
 
-        /*public void SetSwapAllow(bool swapAllow) {
-            _gridViewer.SwapComponent.IsSwapAllows = swapAllow;
-        }*/
+        public async UniTask RunLocationView(List<Vector3> waypoints) {
+            await FreeViewState.ViewLocation(new ShowMapArgs(waypoints));
+        }
     }
 }

@@ -1,9 +1,10 @@
-using Scripts.Services.Input;
+using Scripts.Services.EventBus;
 using UnityEngine;
+using Zenject;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class Swapper : ISwapper, IInputHandler
+    internal class Swapper : ISwapper, IInputHandler, IInitializable, ILateDisposable
     {
         protected readonly UnityEngine.Camera _camera;
         protected Vector3 _startPoint;
@@ -27,6 +28,14 @@ namespace Scripts.Systems.Camera.GridView
 
         void IInputHandler.OnMouseButtonUp() {
             _clickIsFixated = false;
+        }
+
+        public void Initialize() {
+            EventBus<IExternalGridViewEventHandler>.Subscribe(this);
+        }
+
+        public void LateDispose() {
+            EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
         }
     }
 }

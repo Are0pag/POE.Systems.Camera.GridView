@@ -1,16 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using Scripts.Services.EventBus;
 using Zenject;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class GridViewer : ITickable
+    internal class GridViewer : ITickable //  IZoomHandler (не забыв про то, что эти методы асинхронные)
     {
         internal protected CameraState CurrentState { get; protected set; }
-        internal protected FocusState FocusState { get; protected set; }
-
-        internal GridViewer(FocusState focusState) {
-            FocusState = focusState;
-        }
 
         internal void SwitchState([DisallowNull] CameraState newState) {
             CurrentState = newState;

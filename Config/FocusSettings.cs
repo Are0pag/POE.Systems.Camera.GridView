@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView
 {
+    [System.Serializable]
     internal class FocusSettings
     {
         /// <summary>

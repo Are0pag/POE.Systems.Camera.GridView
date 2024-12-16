@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView
 {
+    [System.Serializable]
     internal class ZoomSettings
     {
         [field: SerializeField] internal protected float ZoomSpeed { get; protected set; }

@@ -6,9 +6,9 @@ namespace Scripts.Systems.Camera.GridView
 {
     internal class MoveToSelectedItemArgs : Args
     {
-        internal protected Transform Target { get; }
+        internal protected Vector3 Target { get; }
 
-        internal MoveToSelectedItemArgs([DisallowNull] Transform target) {
+        internal MoveToSelectedItemArgs([DisallowNull] Vector3 target) {
             Target = target;
         }
     }

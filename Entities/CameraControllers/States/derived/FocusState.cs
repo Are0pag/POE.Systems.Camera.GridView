@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class FocusState : CameraState, IFocusTargetHandler, ICancelOperationHandler
+    public class FocusState : CameraState, IFocusTargetHandler, ICancelOperationHandler
     {
-        protected readonly IFocusable _focusable;
-        protected readonly IFocusCatcher _focusCatcher;
+        protected private readonly IFocusable _focusable;
+        protected private readonly IFocusCatcher _focusCatcher;
         
         internal FocusState(IFocusable focusable, IFocusCatcher focusCatcher) {
             _focusable = focusable;
@@ -17,7 +17,7 @@ namespace Scripts.Systems.Camera.GridView
         }
 
         public async void SetFocusTarget(Transform focusTarget) {
-            await _focusCatcher.MoveAt(new MoveToSelectedItemArgs(focusTarget));
+            await _focusCatcher.MoveAt(new MoveToSelectedItemArgs(focusTarget.transform.position));
             _focusable.Target = focusTarget;
         }
 

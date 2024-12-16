@@ -1,6 +1,6 @@
 namespace Scripts.Systems.Camera.GridView
 {
-    internal abstract class CameraState
+    public abstract class CameraState
     {
         internal abstract void Update();
     }

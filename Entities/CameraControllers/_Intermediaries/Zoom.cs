@@ -9,7 +9,7 @@ namespace Scripts.Systems.Camera.GridView
         protected readonly UnityEngine.Camera _camera;
         protected readonly PropertyInfo _zoomProperty;
         protected readonly ZoomSettings _settings;
-        protected MiddleWareAsync _middleWare;
+        protected AsyncOperationHandler _middleWare;
 
         public Zoom(UnityEngine.Camera camera, Config config) {
             _camera = camera;
@@ -27,8 +27,8 @@ namespace Scripts.Systems.Camera.GridView
 
         public void Cancel() => _middleWare?.Cancel();
 
-        private MiddleWareAsync CreateOperationHandler(float zoomAmount) {
-            _middleWare = new MiddleWareAsync(new InterpolationLinearMathf<UnityEngine.Camera>(
+        private AsyncOperationHandler CreateOperationHandler(float zoomAmount) {
+            _middleWare = new AsyncOperationHandler(new InterpolationLinearMathf<UnityEngine.Camera>(
                 targetInstance: _camera,
                 targetProperty: _zoomProperty,
                 startValue: _camera.orthographicSize,

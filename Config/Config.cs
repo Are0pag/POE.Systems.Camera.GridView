@@ -14,7 +14,11 @@ namespace Scripts.Systems.Camera.GridView
     
     internal class Config : ScriptableObject
     {
+        internal const float CAMERA_POS_Z = -10f;
         [field: SerializeField] internal protected ZoomSettings ZoomSettings { get; protected set; }
         [field: SerializeField] internal protected FocusSettings FocusSettings { get; protected set; }
+        [field: SerializeField] internal protected ViewLocationSettings ViewLocationSettings { get; protected set; }
     }
+
+
 }

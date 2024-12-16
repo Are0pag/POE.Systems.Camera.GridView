@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Cysharp.Threading.Tasks;
 using Scripts.Tools.Interpolation;
@@ -10,7 +11,9 @@ namespace Scripts.Systems.Camera.GridView
         protected readonly UnityEngine.Camera _camera;
         protected readonly PropertyInfo _propertyInfo;
         protected readonly FocusSettings _settings;
-        protected MiddleWareAsync _operationHandler;
+        
+        [AllowNull] 
+        protected AsyncOperationHandler _operationHandler;
 
         internal FocusCatcher(UnityEngine.Camera camera, Config config) {
             _camera = camera;
@@ -20,11 +23,11 @@ namespace Scripts.Systems.Camera.GridView
 
         public async UniTask MoveAt(MoveToSelectedItemArgs args) {
             
-            _operationHandler = new MiddleWareAsync(new InterpolationLinearVector3<Transform>(
+            _operationHandler = new AsyncOperationHandler(new InterpolationLinearVector3<Transform>(
                 targetInstance: _camera.transform,
                 targetProperty: _propertyInfo,
-                startValue: _camera.transform.position,
-                finalValue: args.Target.transform.position,
+                startValue: new Vector3(_camera.transform.position.x, _camera.transform.position.y, Config.CAMERA_POS_Z),
+                finalValue: new Vector3(args.Target.x, args.Target.y, Config.CAMERA_POS_Z),
                 byTime: _settings.CatchSpeed
                 ));
             await _operationHandler.RunAsync();
