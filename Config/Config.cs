@@ -1,3 +1,4 @@
+using Scripts.Systems.Camera.GridView.View;
 using UnityEngine;
 #if UNITY_EDITOR
 using Scripts.Tools.CustomEdit;
@@ -18,7 +19,6 @@ namespace Scripts.Systems.Camera.GridView
         [field: SerializeField] internal protected ZoomSettings ZoomSettings { get; protected set; }
         [field: SerializeField] internal protected FocusSettings FocusSettings { get; protected set; }
         [field: SerializeField] internal protected ViewLocationSettings ViewLocationSettings { get; protected set; }
+        [field: SerializeField] internal protected SwapSettings SwapSettings { get; protected set; }
     }
-
-
 }

@@ -13,7 +13,7 @@ namespace Scripts.Systems.Camera.GridView
         
         public override void InstallBindings() {
             // Entities / Intermediaries
-            Container.BindInterfacesAndSelfTo<Swapper>().AsSingle().WithArguments(_sceneSettings.Camera);
+            Container.BindInterfacesAndSelfTo<Swapper>().AsSingle().WithArguments(_sceneSettings.Camera, _config.SwapSettings);
             Container.Bind<IZoom>().To<Zoom>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
             Container.Bind<IFocusCatcher>().To<FocusCatcher>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
             Container.Bind<IFocusable>().To<FocusFollower>().AsSingle().WithArguments(_sceneSettings.Camera);
