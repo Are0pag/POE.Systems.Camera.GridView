@@ -10,5 +10,8 @@ namespace Scripts.Systems.Camera.GridView
         
         [field: SerializeField, Range(0, .1f)] 
         internal protected float SensitivityY { get; protected set; }
+        
+        [field: SerializeField, Range(0, 20f)]
+        internal protected float VisibleDistanceOutOfTheMapSides { get; protected set; }
     }
 }

@@ -40,12 +40,12 @@ namespace Scripts.Systems.Camera.GridView
             }
             catch (StackOverflowException overflow) {
 #if UNITY_EDITOR
-                ExceptionLogger.Log(overflow, this);
+                overflow.Log(this);
 #endif
             }
             catch (InvalidOperationException e) {
 #if UNITY_EDITOR
-                ExceptionLogger.Log(e, this);
+                e.Log(this);
 #endif
             }
             await ReturnToStartAsync();
