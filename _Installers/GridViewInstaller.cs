@@ -17,12 +17,11 @@ namespace Scripts.Systems.Camera.GridView
             Container.Bind<IZoom>().To<Zoom>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
             Container.Bind<IFocusCatcher>().To<FocusCatcher>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
             Container.Bind<IFocusable>().To<FocusFollower>().AsSingle().WithArguments(_sceneSettings.Camera);
-            Container.Bind<IFreeCamera>().To<LocationViewer>().AsSingle().WithArguments(_sceneSettings.Camera, _config.ViewLocationSettings);
+            Container.BindInterfacesAndSelfTo<LocationViewer>().AsSingle().WithArguments(_sceneSettings.Camera, _config.ViewLocationSettings);
             
             Container.BindInterfacesAndSelfTo<GridViewer>().AsSingle();
 
             Container.Bind<FocusState>().AsSingle();
-            Container.Bind<FreeViewState>().AsSingle();
             Container.Bind<SwapState>().AsSingle();
 
             Container.Bind<ViewModule>().AsSingle();

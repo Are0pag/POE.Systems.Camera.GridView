@@ -14,19 +14,17 @@ namespace Scripts.Systems.Camera.GridView
         
         public SwapState SwapState { get; }
         public FocusState FocusState { get; }
-        public FreeViewState FreeViewState { get; }
         
-        internal ViewModule(GridViewer viewer, SwapState swapState, FocusState focusState, FreeViewState freeViewState) {
+        internal ViewModule(GridViewer viewer, SwapState swapState, FocusState focusState) {
             _gridViewer = viewer;
             SwapState = swapState;
             FocusState = focusState;
-            FreeViewState = freeViewState;
         }
         
         public void SetState(CameraState state) => _gridViewer.SwitchState(state);
 
-        public async UniTask RunLocationView(List<Vector3> waypoints) {
+        /*public async UniTask RunLocationView(List<Vector3> waypoints) {
             await FreeViewState.ViewLocation(new ShowMapArgs(waypoints));
-        }
+        }*/
     }
 }

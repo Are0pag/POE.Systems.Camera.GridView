@@ -1,7 +1,9 @@
+using Scripts.Tools.Interpolation;
+
 namespace Scripts.Systems.Camera.GridView
 {
-    internal interface IFreeViewHandler : IGridViewSubscriber
+    public interface IFreeViewHandler : IExternalGridViewEventHandler
     {
-        void ViewLocation(ShowMapArgs args);
+        void ViewLocation(ShowMapArgs args, IAsyncOperationHandlerInitialized asyncOperationHandler);
     }
 }

@@ -17,7 +17,7 @@ namespace Scripts.Systems.Camera.GridView
         void OnLocationView(AsyncOperationHandlerInitialized asyncOperationHandlerInitiali);
     }
 
-    public class S
+    public class Controllerr
     {
         private AsyncOperationHandlerInitialized _asyncOperationHandlerInitiali;
         
