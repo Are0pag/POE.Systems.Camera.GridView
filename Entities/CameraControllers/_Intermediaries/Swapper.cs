@@ -58,6 +58,4 @@ namespace Scripts.Systems.Camera.GridView
                 max: new Vector3(x: SwapContextSettings.RightMapSideX, y: SwapContextSettings.UpperMapSideY, z: _camera.transform.position.z));
         }
     }
-    
-    
 }

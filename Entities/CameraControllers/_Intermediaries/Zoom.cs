@@ -1,5 +1,7 @@
 using System.Reflection;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using Scripts.Tools.AsyncOperationsHandle;
 using Scripts.Tools.Interpolation;
 
 namespace Scripts.Systems.Camera.GridView
@@ -40,5 +42,10 @@ namespace Scripts.Systems.Camera.GridView
         
     }
 
-    
+    public class ZoomAsyncOperation : IAsyncOperation
+    {
+        public UniTask RunAsyncOperation(CancellationTokenSource cts) {
+            throw new System.NotImplementedException();
+        }
+    }
 }

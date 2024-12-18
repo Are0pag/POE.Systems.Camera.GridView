@@ -1,5 +1,5 @@
 using Scripts.Services.EventBus;
-using Scripts.Tools.Interpolation;
+using Scripts.Tools.AsyncOperationsHandle;
 using Zenject;
 
 namespace Scripts.Systems.Camera.GridView
