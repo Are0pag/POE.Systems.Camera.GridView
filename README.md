@@ -10,7 +10,7 @@
 ![Static Badge](https://img.shields.io/badge/CCG-inactive "Collectable Card Game")
 ![Static Badge](https://img.shields.io/badge/GBG-inactive "Grid Based Game")
 
-### POE.Systems.Camera.GridView Module
+### POE.Systems.Camera.LocationView Module
 #### Requarements: 
 - [Services.EventBus](https://github.com/Are0pag/Services.EventBus)
 - [POE.Tools Module](https://github.com/Are0pag/GridGeneration](https://github.com/Are0pag/POE.Tools))
