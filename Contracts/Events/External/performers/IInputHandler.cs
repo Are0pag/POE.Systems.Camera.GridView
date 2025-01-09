@@ -1,6 +1,6 @@
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
-    public interface IInputHandler : IExternalGridViewEventHandler
+    public interface IInputHandler : IExternalLocationViewEventSubscriber
     {
         void OnMouseButtonDown();
         void OnMouseButtonUp();

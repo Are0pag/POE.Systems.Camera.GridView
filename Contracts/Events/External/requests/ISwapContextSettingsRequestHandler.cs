@@ -1,6 +1,6 @@
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
-    public interface ISwapContextSettingsRequestHandler : IExternalGridViewEventHandler
+    public interface ISwapContextSettingsRequestHandler : IExternalLocationViewEventSubscriber
     {
         void GetContextSettings(ISwapContextContainer container);
     }

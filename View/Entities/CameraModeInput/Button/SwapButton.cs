@@ -1,4 +1,4 @@
-namespace Scripts.Systems.Camera.GridView.View
+namespace Scripts.Systems.Camera.LocationView.View
 {
     internal class SwapButton : CameraModeButton
     {

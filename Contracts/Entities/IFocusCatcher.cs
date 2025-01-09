@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Cysharp.Threading.Tasks;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     internal interface IFocusCatcher
     {

@@ -1,7 +1,7 @@
 using Scripts.Tools.Attributes;
 using UnityEngine;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     [System.Serializable]
     internal class SceneSettings

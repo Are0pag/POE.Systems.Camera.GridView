@@ -1,6 +1,6 @@
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
-    public interface IFocusTargetRequestHandler : IExternalGridViewEventHandler {
+    public interface IFocusTargetRequestHandler : IExternalLocationViewEventSubscriber {
         void GetTarget(IFocusTargetContainer focusTargetContainer);
     }
 }

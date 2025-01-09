@@ -3,7 +3,7 @@ using Scripts.Tools;
 using UnityEngine;
 using Zenject;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     internal class Swapper : ISwapper, IInputHandler, IInitializable, ILateDisposable, ISwapContextContainer
     {
@@ -19,9 +19,9 @@ namespace Scripts.Systems.Camera.GridView
             _settings = swapSettings;
         }
 
-        void IInitializable.Initialize() => EventBus<IExternalGridViewEventHandler>.Subscribe(this);
+        void IInitializable.Initialize() => EventBus<IExternalLocationViewEventSubscriber>.Subscribe(this);
 
-        void ILateDisposable.LateDispose() => EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
+        void ILateDisposable.LateDispose() => EventBus<IExternalLocationViewEventSubscriber>.Unsubscribe(this);
 
         void IInputHandler.OnMouseButtonDown() {
             _startPoint = _camera.ScreenToWorldPoint(Input.mousePosition);
@@ -48,7 +48,7 @@ namespace Scripts.Systems.Camera.GridView
 
         protected Vector3 ClampByContextSettings(Vector3 desiredPosition) {
             if (SwapContextSettings is null) {
-                EventBus<IExternalGridViewEventHandler>.RaiseEvent<ISwapContextSettingsRequestHandler>
+                EventBus<IExternalLocationViewEventSubscriber>.RaiseEvent<ISwapContextSettingsRequestHandler>
                     (h => h.GetContextSettings(container: this));
                 return desiredPosition;
             }

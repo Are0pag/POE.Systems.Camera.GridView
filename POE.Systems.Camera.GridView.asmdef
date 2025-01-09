@@ -1,6 +1,6 @@
 {
-    "name": "POE.Systems.Camera.GridView",
-    "rootNamespace": "Scripts.Systems.Camera.GridView",
+    "name": "POE.Systems.Camera.LocationView",
+    "rootNamespace": "Scripts.Systems.Camera.LocationView",
     "references": [
         "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",

@@ -1,6 +1,6 @@
 using System;
 
-namespace Scripts.Systems.Camera.GridView.View
+namespace Scripts.Systems.Camera.LocationView.View
 {
     public class LocationViewUI
     {

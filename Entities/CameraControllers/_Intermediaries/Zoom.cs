@@ -5,7 +5,7 @@ using Scripts.Tools.Interpolation;
 using UnityEngine;
 using Zenject;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     internal class Zoom : IZoomHandler, Zenject.IInitializable, Zenject.ILateDisposable
     {
@@ -17,9 +17,9 @@ namespace Scripts.Systems.Camera.GridView
             _settings = config.ZoomSettings;
         }
 
-        void IInitializable.Initialize() => EventBus<IExternalGridViewEventHandler>.Subscribe(this);
+        void IInitializable.Initialize() => EventBus<IExternalLocationViewEventSubscriber>.Subscribe(this);
 
-        void ILateDisposable.LateDispose() => EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
+        void ILateDisposable.LateDispose() => EventBus<IExternalLocationViewEventSubscriber>.Unsubscribe(this);
 
         void IZoomHandler.ZoomIn(IAsyncOperationHandlerInitialized asyncOperationHandler) {
             asyncOperationHandler.Initialize(CreateOperationHandler(-_settings.ZoomAmount));

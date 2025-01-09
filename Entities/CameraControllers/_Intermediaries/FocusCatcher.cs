@@ -5,7 +5,7 @@ using Scripts.Tools.AsyncOperationsHandle;
 using Scripts.Tools.Interpolation;
 using UnityEngine;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     internal class FocusCatcher : IFocusCatcher
     {

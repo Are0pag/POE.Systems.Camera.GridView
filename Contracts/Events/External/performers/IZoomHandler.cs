@@ -1,8 +1,8 @@
 using Scripts.Tools.AsyncOperationsHandle;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
-    public interface IZoomHandler : IExternalGridViewEventHandler
+    public interface IZoomHandler : IExternalLocationViewEventSubscriber
     {
         void ZoomIn(IAsyncOperationHandlerInitialized asyncOperationHandler);
         void ZoomOut(IAsyncOperationHandlerInitialized asyncOperationHandler);

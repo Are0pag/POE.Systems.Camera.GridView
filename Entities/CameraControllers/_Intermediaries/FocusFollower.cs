@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     internal class FocusFollower : IFocusable
     {

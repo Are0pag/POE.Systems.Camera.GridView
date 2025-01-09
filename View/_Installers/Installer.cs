@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Scripts.Systems.Camera.GridView.View
+namespace Scripts.Systems.Camera.LocationView.View
 {
     public class Installer : MonoInstaller
     {

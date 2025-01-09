@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using Scripts.Services.EventBus;
 using UnityEngine;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     public class FocusState : CameraState, IFocusTargetContainer
     {
@@ -29,7 +29,7 @@ namespace Scripts.Systems.Camera.GridView
 
         internal override async void OnEnterState() {
             if (!Target)
-                EventBus<IExternalGridViewEventHandler>
+                EventBus<IExternalLocationViewEventSubscriber>
                    .RaiseEvent<IFocusTargetRequestHandler>(h => h.GetTarget(this));
 
             if (!Target)

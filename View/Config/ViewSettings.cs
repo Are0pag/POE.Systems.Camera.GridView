@@ -4,7 +4,7 @@ using UnityEngine;
 using Scripts.Tools.CustomEdit;
 #endif
 
-namespace Scripts.Systems.Camera.GridView.View
+namespace Scripts.Systems.Camera.LocationView.View
 {
 
 #if UNITY_EDITOR

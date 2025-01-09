@@ -4,7 +4,7 @@ using Scripts.Tools.View;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Systems.Camera.GridView.View
+namespace Scripts.Systems.Camera.LocationView.View
 {
     internal class CameraModeInput : MonoBehaviour
     {

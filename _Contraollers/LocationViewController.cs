@@ -3,7 +3,7 @@ using Scripts.Services.EventBus;
 using Scripts.Tools.AsyncOperationsHandle;
 using Zenject;
 
-namespace Scripts.Systems.Camera.GridView
+namespace Scripts.Systems.Camera.LocationView
 {
     internal class LocationViewController : ITickable, IInitializable, ILateDisposable, IFreeViewHandler
     {
@@ -25,10 +25,10 @@ namespace Scripts.Systems.Camera.GridView
             => CurrentState?.UpdateState();
 
         void IInitializable.Initialize() 
-            => EventBus<IExternalGridViewEventHandler>.Subscribe(this);
+            => EventBus<IExternalLocationViewEventSubscriber>.Subscribe(this);
 
         void ILateDisposable.LateDispose() 
-            => EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
+            => EventBus<IExternalLocationViewEventSubscriber>.Unsubscribe(this);
 
         void IFreeViewHandler.OnViewLocation(ShowMapArgs args, IAsyncOperationHandlerInitialized asyncOperationHandler) 
             => SwitchState(_nonUpdatedState);
