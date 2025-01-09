@@ -2,9 +2,13 @@ namespace Scripts.Systems.Camera.GridView
 {
     public abstract class CameraState
     {
-        internal abstract void Update();
+        internal abstract void UpdateState();
 
-        internal virtual void OnExit() {
+        internal virtual void OnEnterState() {
+            
+        }
+
+        internal virtual void OnExitState() {
             
         }
     }

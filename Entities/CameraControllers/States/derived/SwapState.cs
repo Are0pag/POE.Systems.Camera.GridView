@@ -8,7 +8,7 @@ namespace Scripts.Systems.Camera.GridView
             _swapper = swapper;
         }
 
-        internal override void Update() {
+        internal override void UpdateState() {
             _swapper.HandleSwap();
         }
     }

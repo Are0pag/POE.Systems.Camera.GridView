@@ -5,19 +5,18 @@ using Scripts.Tools;
 using Scripts.Tools.AsyncOperationsHandle;
 using Scripts.Tools.Interpolation;
 using UnityEngine;
-
 #if UNITY_EDITOR
-    using Scripts.Tools.CustomEdit;
+using Scripts.Tools.CustomEdit;
 #endif
 
 namespace Scripts.Systems.Camera.GridView
 {
     internal class LocationViewAsyncOperation : IAsyncOperation
     {
-        protected readonly ShowMapArgs _args;
         protected private readonly IFocusCatcher _focusCatcher;
-        protected readonly UnityEngine.Camera _camera;
         protected private readonly ViewLocationSettings _settings;
+        protected readonly ShowMapArgs _args;
+        protected readonly UnityEngine.Camera _camera;
         protected AsyncOperationHandler _operationHandler;
 
         internal bool IsCancellationRequests;
@@ -32,25 +31,36 @@ namespace Scripts.Systems.Camera.GridView
         public async UniTask RunAsyncOperation(CancellationTokenSource cts) {
             await ShowMapAsyncRecursive();
         }
-        
-        public async UniTask ShowMapAsyncRecursive() {
+
+        public async UniTask Skip() {
+            _operationHandler.Cancel();
+            await ReturnToStartAsync();
+        }
+
+        public void Cancel() {
+            IsCancellationRequests = true;
+            _operationHandler.Cancel();
+        }
+
+        protected async UniTask ShowMapAsyncRecursive() {
             IsCancellationRequests = false;
 
             await _focusCatcher.MoveAt(new MoveToSelectedItemArgs(_args.StartPosition));
-
+            
             try {
                 await ShowIntervalAsyncRecursive(_args);
             }
             catch (StackOverflowException overflow) {
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 overflow.Log(this);
-#endif
+                #endif
             }
             catch (InvalidOperationException e) {
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 e.Log(this);
-#endif
+                #endif
             }
+
             await ReturnToStartAsync();
         }
 
@@ -72,18 +82,13 @@ namespace Scripts.Systems.Camera.GridView
             await _operationHandler.RunAsync();
         }
 
-        public void Cancel() {
-            IsCancellationRequests = true;
-            _operationHandler.Cancel();
-        }
-
         protected void CreateOperation(Vector3 startPosition, Vector3 targetPosition, float byTime) {
-            _operationHandler = new AsyncOperationHandler(new InterpolationLinearVector3<Transform>(
-                _camera.transform,
-                PropInfos.PosTransform,
-                new Vector3(startPosition.x, startPosition.y, Config.CAMERA_POS_Z),
-                new Vector3(targetPosition.x, targetPosition.y, Config.CAMERA_POS_Z),
-                byTime
+            _operationHandler = new AsyncOperationHandler(asyncOperation: new InterpolationLinearVector3<Transform>(
+                targetInstance: _camera.transform,
+                targetProperty: PropInfos.PosTransform,
+                startValue: new Vector3(startPosition.x, startPosition.y, Config.CAMERA_POS_Z),
+                finalValue: new Vector3(targetPosition.x, targetPosition.y, Config.CAMERA_POS_Z),
+                byTime: byTime
             ));
         }
     }

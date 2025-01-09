@@ -1,51 +1,43 @@
-using System.Reflection;
-using System.Threading;
-using Cysharp.Threading.Tasks;
+using Scripts.Services.EventBus;
+using Scripts.Tools;
 using Scripts.Tools.AsyncOperationsHandle;
 using Scripts.Tools.Interpolation;
+using UnityEngine;
+using Zenject;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    internal class Zoom : IZoom, ICancelable
+    internal class Zoom : IZoomHandler, Zenject.IInitializable, Zenject.ILateDisposable
     {
         protected readonly UnityEngine.Camera _camera;
-        protected readonly PropertyInfo _zoomProperty;
         protected readonly ZoomSettings _settings;
-        protected AsyncOperationHandler _middleWare;
 
         public Zoom(UnityEngine.Camera camera, Config config) {
             _camera = camera;
-            _zoomProperty = typeof(UnityEngine.Camera).GetProperty("orthographicSize");
             _settings = config.ZoomSettings;
         }
-        
-        public async UniTask ZoomIn() {
-            await CreateOperationHandler(_settings.ZoomAmount).RunAsync();
+
+        void IInitializable.Initialize() => EventBus<IExternalGridViewEventHandler>.Subscribe(this);
+
+        void ILateDisposable.LateDispose() => EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
+
+        void IZoomHandler.ZoomIn(IAsyncOperationHandlerInitialized asyncOperationHandler) {
+            asyncOperationHandler.Initialize(CreateOperationHandler(-_settings.ZoomAmount));
         }
 
-        public async UniTask ZoomOut() {
-            await CreateOperationHandler(-_settings.ZoomAmount).RunAsync();
+        void IZoomHandler.ZoomOut(IAsyncOperationHandlerInitialized asyncOperationHandler) {
+            asyncOperationHandler.Initialize(CreateOperationHandler(_settings.ZoomAmount));
         }
 
-        public void Cancel() => _middleWare?.Cancel();
-
-        private AsyncOperationHandler CreateOperationHandler(float zoomAmount) {
-            _middleWare = new AsyncOperationHandler(new InterpolationLinearMathf<UnityEngine.Camera>(
-                targetInstance: _camera,
-                targetProperty: _zoomProperty,
-                startValue: _camera.orthographicSize,
-                finalValue: _camera.orthographicSize + zoomAmount,
-                byTime: _settings.ZoomSpeed
-            ));
-            return _middleWare;
-        }
-        
-    }
-
-    public class ZoomAsyncOperation : IAsyncOperation
-    {
-        public UniTask RunAsyncOperation(CancellationTokenSource cts) {
-            throw new System.NotImplementedException();
+        protected IAsyncOperation CreateOperationHandler(float zoomAmount) {
+            return 
+                new InterpolationLinearMathf<UnityEngine.Camera>(
+                        targetInstance: _camera,
+                        targetProperty: PropInfos.CameraOrthographicSize,
+                        startValue: _camera.orthographicSize,
+                        finalValue: Mathf.Clamp(_camera.orthographicSize + zoomAmount, _settings.MinZoom, _settings.MaxZoom),
+                        byTime: _settings.ZoomSpeed
+                    );
         }
     }
 }

@@ -2,7 +2,7 @@ namespace Scripts.Systems.Camera.GridView
 {
     public class NonUpdatedState : CameraState
     {
-        internal override void Update() {
+        internal override void UpdateState() {
             
         }
     }

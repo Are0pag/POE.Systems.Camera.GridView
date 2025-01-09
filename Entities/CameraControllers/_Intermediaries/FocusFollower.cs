@@ -6,16 +6,12 @@ namespace Scripts.Systems.Camera.GridView
     {
         protected readonly UnityEngine.Camera _camera;
 
-        public Transform Target { set; get; }
-
         internal FocusFollower(UnityEngine.Camera camera) {
             _camera = camera;
         }
 
-        public void Follow() {
-            if (!Target) 
-                return;
-            _camera.transform.position = Target.transform.position;
+        public void Follow(Transform target) {
+            _camera.transform.position = new Vector3(target.position.x, target.position.y, Config.CAMERA_POS_Z);
         }
     }
 }

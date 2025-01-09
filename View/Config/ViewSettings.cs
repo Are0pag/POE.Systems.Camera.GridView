@@ -1,8 +1,8 @@
+
+using UnityEngine;
 #if UNITY_EDITOR
 using Scripts.Tools.CustomEdit;
 #endif
-
-using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView.View
 {

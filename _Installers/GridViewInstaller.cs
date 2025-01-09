@@ -1,30 +1,35 @@
 using UnityEngine;
 using Zenject;
-using Scripts.Systems.Camera.GridView.View;
-using Scripts.Tools.Attributes;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    public sealed class GridViewInstaller : MonoInstaller
+    internal sealed class GridViewInstaller : MonoInstaller
     {
         [SerializeField] private Config _config;
-        [SerializeField] private ViewSettings _viewSettings;
         [SerializeField] private SceneSettings _sceneSettings;
         
         public override void InstallBindings() {
-            // Entities / Intermediaries
+            
+            // Entities
             Container.BindInterfacesAndSelfTo<Swapper>().AsSingle().WithArguments(_sceneSettings.Camera, _config.SwapSettings);
-            Container.Bind<IZoom>().To<Zoom>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
-            Container.Bind<IFocusCatcher>().To<FocusCatcher>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
-            Container.Bind<IFocusable>().To<FocusFollower>().AsSingle().WithArguments(_sceneSettings.Camera);
+            Container.BindInterfacesAndSelfTo<Zoom>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
             Container.BindInterfacesAndSelfTo<LocationViewer>().AsSingle().WithArguments(_sceneSettings.Camera, _config.ViewLocationSettings);
             
-            Container.BindInterfacesAndSelfTo<GridViewer>().AsSingle();
+            Container.Bind<IFocusCatcher>().To<FocusCatcher>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
+            Container.Bind<IFocusable>().To<FocusFollower>().AsSingle().WithArguments(_sceneSettings.Camera);
 
+            Container.BindInterfacesAndSelfTo<LocationViewController>().AsSingle();
+
+            // View States
             Container.Bind<FocusState>().AsSingle();
             Container.Bind<SwapState>().AsSingle();
+            Container.Bind<NonUpdatedState>().AsSingle();
 
+            // Interface
             Container.Bind<ViewModule>().AsSingle();
+            
+            //Utilities
+            Container.Bind<LocationViewDataAdapter>().AsSingle();
         }
     }
 }

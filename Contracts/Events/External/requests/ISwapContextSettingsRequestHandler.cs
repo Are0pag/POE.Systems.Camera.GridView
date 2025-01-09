@@ -4,9 +4,4 @@ namespace Scripts.Systems.Camera.GridView
     {
         void GetContextSettings(ISwapContextContainer container);
     }
-
-    public interface ISwapContextContainer
-    {
-        SwapContextSettings SwapContextSettings { get; set; }
-    }
 }

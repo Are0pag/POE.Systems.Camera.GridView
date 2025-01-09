@@ -1,7 +1,7 @@
 using System;
 using Scripts.Tools.Attributes;
-using UnityEngine;
 using Scripts.Tools.View;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.Systems.Camera.GridView.View

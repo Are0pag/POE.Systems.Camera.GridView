@@ -16,20 +16,16 @@ namespace Scripts.Systems.Camera.GridView
             _settings = settings;
         }
 
-        public void ViewLocation(ShowMapArgs args, IAsyncOperationHandlerInitialized asyncOperationHandler) {
+        public void Initialize() => EventBus<IExternalGridViewEventHandler>.Subscribe(this);
+
+        public void LateDispose() => EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
+
+        public void OnViewLocation(ShowMapArgs args, IAsyncOperationHandlerInitialized asyncOperationHandler) {
             asyncOperationHandler.Initialize(new LocationViewAsyncOperation(
                 _camera,
                 _settings,
                 _focusCatcher,
                 args));
-        }
-
-        public void Initialize() {
-            EventBus<IExternalGridViewEventHandler>.Subscribe(this);
-        }
-
-        public void LateDispose() {
-            EventBus<IExternalGridViewEventHandler>.Unsubscribe(this);
         }
     }
 }

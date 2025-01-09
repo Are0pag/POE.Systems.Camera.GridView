@@ -1,35 +1,64 @@
+using System.Diagnostics.CodeAnalysis;
+using Cysharp.Threading.Tasks;
+using Scripts.Services.EventBus;
 using UnityEngine;
 
 namespace Scripts.Systems.Camera.GridView
 {
-    public class FocusState : CameraState, IFocusTargetHandler, ICancelOperationHandler
+    public class FocusState : CameraState, IFocusTargetContainer
     {
         protected private readonly IFocusable _focusable;
         protected private readonly IFocusCatcher _focusCatcher;
-        
-        protected bool _isFocusing;
-        
+
+        protected bool _isFocused;
+        protected Transform _target;
+
+        public Transform Target {
+            get => _target;
+            set {
+                _isFocused = false;
+                _target = value;
+                OnFocusTarget();
+            }
+        }
+
         internal FocusState(IFocusable focusable, IFocusCatcher focusCatcher) {
             _focusable = focusable;
             _focusCatcher = focusCatcher;
         }
 
-        internal override void Update() {
-            if (_isFocusing) 
-                _focusable.Follow();
+        internal override async void OnEnterState() {
+            if (!Target)
+                EventBus<IExternalGridViewEventHandler>
+                   .RaiseEvent<IFocusTargetRequestHandler>(h => h.GetTarget(this));
+
+            if (!Target)
+                return;
+
+            await MoveToTarget();
+
+            _isFocused = true;
         }
 
-        public async void SetFocusTarget(Transform focusTarget) {
-            await _focusCatcher.MoveAt(new MoveToSelectedItemArgs(focusTarget.transform.position));
-            _focusable.Target = focusTarget;
+        internal override void UpdateState() {
+            if (_isFocused && Target)
+                _focusable.Follow(Target);
         }
 
-        public void CancelOperations() {
-            _focusCatcher.Cancel();
+        internal override void OnExitState() {
+            Target = null;
+            _isFocused = false;
         }
 
-        internal override void OnExit() {
-            _focusable.Target = null;
+        protected async void OnFocusTarget() {
+            if (Target)
+                await MoveToTarget();
+
+            _isFocused = true;
+        }
+
+        protected async UniTask MoveToTarget() {
+            await _focusCatcher.MoveAt(new MoveToSelectedItemArgs(Target.position));
         }
     }
 }
