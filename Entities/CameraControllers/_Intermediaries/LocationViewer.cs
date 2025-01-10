@@ -10,7 +10,7 @@ namespace Scripts.Systems.Camera.LocationView
         protected readonly UnityEngine.Camera _camera;
         protected private readonly ViewLocationSettings _settings;
 
-        public LocationViewer(IFocusCatcher focusCatcher, UnityEngine.Camera camera, ViewLocationSettings settings) {
+        internal LocationViewer(IFocusCatcher focusCatcher, UnityEngine.Camera camera, ViewLocationSettings settings) {
             _focusCatcher = focusCatcher;
             _camera = camera;
             _settings = settings;
@@ -20,12 +20,16 @@ namespace Scripts.Systems.Camera.LocationView
 
         public void LateDispose() => EventBus<IExternalLocationViewEventSubscriber>.Unsubscribe(this);
 
-        public void OnViewLocation(ShowMapArgs args, IAsyncOperationHandlerInitialized asyncOperationHandler) {
-            asyncOperationHandler.Initialize(new LocationViewAsyncOperation(
+        public virtual void OnViewLocation(ShowMapArgs args, IAsyncOperationHandlerInitialized asyncOperationHandler) {
+            asyncOperationHandler.Initialize(CreateAsyncOperation(args));
+        }
+
+        protected LocationViewAsyncOperation CreateAsyncOperation(ShowMapArgs args) {
+            return new LocationViewAsyncOperation(
                 _camera,
                 _settings,
                 _focusCatcher,
-                args));
+                args);
         }
     }
 }
