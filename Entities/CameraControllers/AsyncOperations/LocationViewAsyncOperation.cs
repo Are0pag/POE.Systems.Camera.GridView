@@ -31,9 +31,9 @@ namespace Scripts.Systems.Camera.LocationView
         public async UniTask RunAsyncOperation(CancellationTokenSource cts) {
             await ShowMapAsyncRecursive();
         }
-
+        
         public async UniTask Skip() {
-            _operationHandler.Cancel();
+            Cancel();
             await ReturnToStartAsync();
         }
 
@@ -65,7 +65,7 @@ namespace Scripts.Systems.Camera.LocationView
         }
 
         protected async UniTask ShowIntervalAsyncRecursive(ShowMapArgs args) {
-            if (args.MovePointsTrace.Count < 2 && IsCancellationRequests)
+            if (args.MovePointsTrace.Count < 2 || IsCancellationRequests)
                 return;
             
             CreateOperation(

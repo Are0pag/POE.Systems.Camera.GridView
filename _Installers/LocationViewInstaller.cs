@@ -11,7 +11,7 @@ namespace Scripts.Systems.Camera.LocationView
         public override void InstallBindings() {
             
             // Entities
-            Container.BindInterfacesAndSelfTo<LocationViewer>().AsSingle().WithArguments(_sceneSettings.Camera, _config.ViewLocationSettings);
+            Container.BindInterfacesAndSelfTo<SkippableLocationViewer>().AsSingle().WithArguments(_sceneSettings.Camera, _config.ViewLocationSettings);
             Container.BindInterfacesAndSelfTo<Swapper>().AsSingle().WithArguments(_sceneSettings.Camera, _config.SwapSettings);
             Container.BindInterfacesAndSelfTo<Zoom>().AsSingle().WithArguments(_sceneSettings.Camera, _config);
 
